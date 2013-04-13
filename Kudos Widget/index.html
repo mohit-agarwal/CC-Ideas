@@ -1,0 +1,291 @@
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<style type="text/css">
+#neeche{
+position:absolute;
+margin-top:600px;
+
+}
+
+#ccimg{
+width:3em;
+height:3em;
+position:absolute;
+left:1.4em;
+top:0.8em;
+
+}
+
+#heading{
+position:absolute;
+left:3.4em;
+top:0.8em;
+font-size:25px;
+color:#ffffff;
+}
+
+#oopar{
+background:black;
+width:86em;
+height:4.4em;
+position:absolute;
+      top:0em;
+	 left:0em;
+}
+
+#kudomsg{
+color:#1A1A1A;
+position:absolute;
+font-size:23px;
+z-index:10;
+left:6.7em;
+top:3.7em;
+font-weight:bold;
+}
+
+
+#UserList{
+position:absolute;
+float:left; 
+margin-top:80px; 
+width:100px;
+border-right:2px solid black;
+top:20px; 
+height:300px;
+padding:10px;
+overflow:scroll-y;
+}
+
+#chat{
+
+position:absolute;
+margin-top:80px; 
+border-left:2px solid black;
+color:blue;
+font-size:20px;
+top:20px; 
+left:46em;
+height:300px;
+padding:18px;
+}
+
+
+#userchat{
+color:black;
+font-size:18px;
+}
+
+
+
+
+#whiteboard{
+position:absolute; 
+float:left; 
+margin-left:170px; 
+margin-top:118px; 
+width:300px;
+height:180px;
+overflow:scroll-y;
+padding:10px;
+}
+
+</style>
+<script>
+        // on load of page
+        $(function(){
+                $('#canvas').mousedown(function(e) {
+                var mouseX = e.pageX - this.offsetLeft-180;
+                var mouseY = e.pageY - this.offsetTop-130;
+                paint = true;
+             // addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+                redraw_b(mouseX,mouseY,0);              
+                });
+        });
+
+
+
+</script>
+<div id="oopar">
+<img id="ccimg" src="cc.png"/>
+<b id="heading" >OpenHome</b>
+</div>
+<div id="UserList">
+<b>USERS</b>
+	<br>
+        <div id="users"><br/>Mohit<br/>Yash<br/>UserA<br/>UserB<br/>UserC<br/>UserC<br/></div>
+</div>
+<div id="whiteboard">
+
+<canvas id="canvas" width="690" height="500" style="border:1px solid #000000;"></canvas>
+</div>
+<div id="chat">
+Discuss the author's works with others!<br><br>
+<div id="userchat">
+<b>Mohit : </b>Hey, author's images are awesome!<br>
+<b>Yash : </b>Yes! I do agree! :) <br>
+<b>UserA : </b>Have u used any of his works?<br>
+</div>
+</div>
+
+<br>
+<div id ="neeche">
+</div>
+
+<div id="kudomsg">
+Express your kudos on this whiteboard! </div>
+
+<script>
+var context = document.getElementById('canvas').getContext("2d");       
+
+var clickX = new Array();
+var clickY = new Array();
+var clickDrag = new Array();
+var paint;
+var prevX;
+var prevY;
+var count=0; 
+//var color=new Array("ff0000","df4b27","#0000ff","#ff8c00","#808000");
+var colorb="#ff0000";
+var store_color;
+
+$('#erase').click(function (){
+colorb="#FFFFFF";
+});
+
+$('#pen').click(function (){
+colorb=store_color;
+});
+
+
+$('#canvas').mousemove(function(e){
+  if(paint){
+    
+    mouseX=e.pageX - this.offsetLeft-180;
+    mouseY=e.pageY - this.offsetTop-130;
+    redraw1(mouseX,mouseY);
+  }
+});
+
+$('#canvas').mouseup(function(e){
+  paint = false;
+});
+
+$('#canvas').mouseleave(function(e){
+  paint = false;
+});
+
+
+
+function addClick(x, y, dragging)
+{
+  clickX.push(x);
+  clickY.push(y);
+  clickDrag.push(dragging);
+}
+
+
+
+function redraw_b(mouseX,mouseY){
+
+        if(count==0) {  
+        canvas.width = canvas.width; // Clears the canvas
+        count++;
+        }
+        context.strokeStyle = colorb;
+        context.lineJoin = "round";
+	if(colorb=="#ffffff" || colorb=="#FFFFFF")
+	context.lineWidth=15;
+	else
+        context.lineWidth = 5;
+                                
+    context.beginPath();
+  
+      context.moveTo(mouseX-1, mouseY);
+
+     context.lineTo(mouseX,  mouseY);
+     prevX=mouseX;
+     prevY=mouseY;
+     context.closePath();
+     context.stroke();  
+
+ 
+//redraw();
+
+}
+
+function redraw_c(mouseX,mouseY,colorc){
+
+        if(count==0) {  
+        canvas.width = canvas.width; // Clears the canvas
+        count++;
+        }
+        context.strokeStyle = colorc;
+        context.lineJoin = "round";
+	if(colorc=="#ffffff" || colorc=="#FFFFFF")
+	context.lineWidth=15;
+	else
+        context.lineWidth = 5;
+                                
+                                
+    context.beginPath();
+  
+      context.moveTo(mouseX-1, mouseY);
+
+     context.lineTo(mouseX,  mouseY);
+     context.closePath();
+     context.stroke();  
+
+ 
+//redraw();
+
+}
+function redraw1(mouseX,mouseY){
+        context.strokeStyle = colorb;
+        context.lineJoin = "round";
+	if(colorb=="#ffffff" || colorb=="#FFFFFF")
+	context.lineWidth=15;
+	else
+        context.lineWidth = 5;
+                                
+                                
+    context.beginPath();
+  
+      context.moveTo(prevX, prevY);
+
+     context.lineTo(mouseX,  mouseY);
+     prevX=mouseX;
+     prevY=mouseY;
+     context.closePath();
+     context.stroke();  
+
+
+}
+
+function redraw1_c(mouseX,mouseY,preva,prevb,colorc){
+        context.strokeStyle = colorc;
+        context.lineJoin = "round";
+	if(colorc=="#ffffff" || colorc=="#FFFFFF")
+	context.lineWidth=15;
+	else
+        context.lineWidth = 5;
+                                
+                                
+    context.beginPath();
+  
+      context.moveTo(preva, prevb);
+
+     context.lineTo(mouseX,  mouseY);
+     context.closePath();
+     context.stroke();  
+
+
+}
+
+
+
+</script>
+
+
+
+
